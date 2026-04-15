@@ -77,4 +77,4 @@ SUMMARY STATISTICS:
 Records: 5 | Avg Close: $212.90 | High: $378.15 (MSFT) | Low: $138.91 (GOOGL)
 Bullish: 3 | Bearish: 2
 
-
+# use this for only good no gambling please
