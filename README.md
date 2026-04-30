@@ -6,7 +6,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)
 ![Build Status](https://img.shields.io/badge/build-passing-success)
 
-## 📋 Description
+##  Description
 The Stock Analyzer is a C-based program designed to process and analyze stock market data efficiently from text files. It reads structured stock data, computes key insights such as price trends, averages, highs, and lows, and displays them in a formatted table for quick evaluation.
 
 **Key Demonstrations:**
@@ -15,7 +15,7 @@ The Stock Analyzer is a C-based program designed to process and analyze stock ma
 - Modular programming (multiple .c files)
 - Command-line based report generation
 
-## 📁 Files Overview
+##  Files Overview
 stock_analyzer.c → Main program logic for stock analysis
 stock_2.c → Alternate or extended analysis functions
 table.c → Handles formatted data display
@@ -23,17 +23,17 @@ analyze_stock.c → Supporting or experimental analysis module
 stock_data.txt → Sample dataset for analysis
 README.md → Project documentation
 
-## ✨ Features
+##  Features
 | Feature | Description |
 |---------|-------------|
-| 📊 Data Parsing | Reads structured stock data from text files |
-| 📈 Trend Analysis | Computes price trends and patterns |
-| 📉 Statistics | Calculates averages, highs, lows, and volatility |
-| 🖥️ Formatted Output | Displays results in clean tables |
-| 🔧 Modular Design | Separate modules for analysis and display |
-| ⚡ Performance | Optimized C for rapid processing |
+|  Data Parsing | Reads structured stock data from text files |
+|  Trend Analysis | Computes price trends and patterns |
+|  Statistics | Calculates averages, highs, lows, and volatility |
+|  Formatted Output | Displays results in clean tables |
+|  Modular Design | Separate modules for analysis and display |
+|  Performance | Optimized C for rapid processing |
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - GCC compiler (version 4.8 or higher)
