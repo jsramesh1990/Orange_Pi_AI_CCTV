@@ -1,0 +1,55 @@
+orange-pi-ai-cctv/
+│
+├── src/
+│   ├── main.c
+│   │
+│   ├── camera/
+│   │   ├── rtsp_capture.c
+│   │   └── rtsp_capture.h
+│   │
+│   ├── detection/
+│   │   ├── detector.c
+│   │   └── detector.h
+│   │
+│   ├── motion/
+│   │   ├── motion_detection.c
+│   │   └── motion_detection.h
+│   │
+│   ├── face/
+│   │   ├── face_recognizer.c
+│   │   └── face_recognizer.h
+│   │
+│   ├── anpr/
+│   │   ├── anpr.c
+│   │   └── anpr.h
+│   │
+│   ├── tracking/
+│   │   ├── deepsort.c
+│   │   ├── tracker.c
+│   │   └── kalman_filter.c
+│   │
+│   ├── database/
+│   │   ├── database.c
+│   │   └── database.h
+│   │
+│   ├── alerts/
+│   │   ├── telegram_bot.c
+│   │   └── telegram_bot.h
+│   │
+│   ├── npu/
+│   │   ├── npu_accelerator.c
+│   │   └── npu_accelerator.h
+│   │
+│   └── config/
+│       ├── config.c
+│       └── config.h
+│
+├── include/
+│
+├── models/
+│   └── yolov8n.onnx
+│
+├── scripts/
+│
+├── Makefile
+└── README.md

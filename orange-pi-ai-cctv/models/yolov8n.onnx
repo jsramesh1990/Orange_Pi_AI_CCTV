@@ -1,0 +1,134 @@
+
+Your current README specifies `yolov8n.onnx` and attempts to download it during setup.  However, that old URL in the README is no longer a reliable download source; a current ONNX copy is available from Hugging Face. ([Hugging Face][1])
+
+### Download it directly
+
+From your project root:
+
+```bash
+mkdir -p models
+
+wget -O models/yolov8n.onnx \
+https://huggingface.co/webml/yolov8n/resolve/main/onnx/yolov8n.onnx
+```
+
+Then verify:
+
+```bash
+ls -lh models/yolov8n.onnx
+```
+
+You should see a file around **12.8 MB**. ([Hugging Face][1])
+
+Your project should then contain:
+
+```text
+orange-pi-ai-cctv/
+│
+├── models/
+│   └── yolov8n.onnx
+│
+├── src/
+│   ├── main.c
+│   ├── detector.c
+│   ├── rtsp_capture.c
+│   └── ...
+│
+└── Makefile
+```
+
+### Important for your C-only conversion
+
+The `.onnx` file itself **does not contain Python code**. It is the neural-network model.
+
+So our C application can eventually do:
+
+```text
+RTSP Camera
+     ↓
+Frame
+     ↓
+OpenCV / FFmpeg
+     ↓
+YOLOv8n ONNX
+     ↓
+ONNX Runtime C API
+     ↓
+Detection Results
+     ↓
+Tracking / Database / Alert
+```
+
+Ultralytics documents ONNX as a deployment format, and for C/C++ applications the model can be executed through a native runtime such as ONNX Runtime. ([Ultralytics Docs][2])
+
+**One correction to the previous plan:** because you specifically want **100% C**, we should use the **ONNX Runtime C API**, not Python `onnxruntime` or the Python Ultralytics package.
+
+If you want, the next step can be **`detector.c` that loads `models/yolov8n.onnx` and performs YOLOv8 inference in pure C**.
+
+[1]: https://huggingface.co/webml/yolov8n/blob/main/onnx/yolov8n.onnx?utm_source=chatgpt.com "onnx/yolov8n.onnx · webml/yolov8n at main"
+[2]: https://docs.ultralytics.com/modes/export?utm_source=chatgpt.com "Model Export with Ultralytics YOLO | Ultralytics"
+
+
+Important point about AI
+
+There is one major issue we should handle carefully.
+
+Your current project uses YOLO/ONNX Runtime, OpenCV, face recognition, ANPR, DeepSORT, PostgreSQL, Redis and Telegram. The README currently installs Python packages such as opencv-python, onnxruntime, ultralytics, requests, etc.
+
+We cannot simply translate Python syntax line-by-line into C.
+
+Instead, we need to replace each Python dependency with an appropriate C/C-compatible API/library.
+
+For example:
+
+Python
+   │
+   ├── OpenCV Python
+   ├── ONNX Runtime Python
+   ├── PostgreSQL Python
+   ├── Redis Python
+   ├── Requests
+   └── Telegram Python
+          │
+          ▼
+       C/C API
+
+And the final runtime should become:
+
+                 ┌─────────────────┐
+                 │     main.c      │
+                 │ System Manager  │
+                 └────────┬────────┘
+                          │
+        ┌─────────────────┼─────────────────┐
+        ▼                 ▼                 ▼
+   RTSP Camera       AI Detection       Motion
+        │                 │                 │
+        ▼                 ▼                 ▼
+   Frame Buffer       YOLO/ONNX        Motion Engine
+        │                 │
+        └────────┬────────┘
+                 ▼
+             Tracking
+                 │
+       ┌─────────┼─────────┐
+       ▼         ▼         ▼
+     Face       ANPR     Database
+   Recognition           PostgreSQL
+       │                   │
+       └─────────┬─────────┘
+                 ▼
+              Alerts
+                 │
+              Telegram
+
+Your existing design already has RTSP capture and motion detection in C, so those portions are good starting points.
+
+So yes — we can convert the project to 100% C, but I recommend doing it module by module, not trying to rewrite everything at once.
+
+The first step should be to convert the Python detector.py main detection engine into detector.c + main.c, then move to face recognition, ANPR, database, Telegram, and finally convert the C++ tracking/NPU components to C.
+
+If you want, I can take this project and 
+build the complete C-only project structure + source files + Makefile, starting from main.c and detector.c.
+
+
