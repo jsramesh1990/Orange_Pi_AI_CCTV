@@ -132,7 +132,7 @@ The application is designed around a native C architecture rather than Python.
 
 ## 3.1 Main Board
 
-Recommended platform:
+Recommended platform
 
 ```text
 Orange Pi 6 Plus
